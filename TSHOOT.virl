@@ -2,12 +2,13 @@
 <topology xmlns="http://www.cisco.com/VIRL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="0.95" xsi:schemaLocation="http://www.cisco.com/VIRL https://raw.github.com/CiscoVIRL/schema/v0.95/virl.xsd">
     <extensions>
         <entry key="AutoNetkit.infrastructure_only" type="Boolean">true</entry>
+        <entry key="management_network" type="String">flat</entry>
     </extensions>
-    <node name="R1" type="SIMPLE" subtype="IOSv" location="775,71">
+    <node name="R1" type="SIMPLE" subtype="IOSv" location="772,68">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">!
-! Last configuration change at 14:58:10 UTC Wed Oct 17 2018
+! Last configuration change at 18:44:23 UTC Wed Oct 24 2018 by cisco
 !
 version 15.6
 service timestamps debug datetime msec
@@ -85,7 +86,7 @@ interface Loopback0
 interface GigabitEthernet0/0
  description OOB Management
  vrf forwarding Mgmt-intf
- ip address 10.255.0.141 255.255.0.0
+ ip address 172.16.1.92 255.255.255.0
  duplex full
  speed auto
  media-type rj45
@@ -98,6 +99,8 @@ interface GigabitEthernet0/1
  duplex full
  speed auto
  media-type rj45
+ ipv6 address 2026::12:1/122
+ ipv6 ospf 6 area 12
 !
 interface GigabitEthernet0/2
  description to R-BGP
@@ -105,6 +108,11 @@ interface GigabitEthernet0/2
  duplex full
  speed auto
  media-type rj45
+!
+router ospfv3 6
+ !
+ address-family ipv6 unicast
+ exit-address-family
 !
 router ospf 1
  router-id 1.1.1.1
@@ -116,7 +124,7 @@ router ospf 11
 router bgp 65001
  bgp log-neighbor-changes
  network 1.1.1.1 mask 255.255.255.255
- redistribute ospf 1
+ redistribute ospf 1 match internal external 1 external 2
  neighbor 209.65.200.226 remote-as 65002
 !
 ip forward-protocol nd
@@ -181,11 +189,11 @@ end
         <interface id="0" name="GigabitEthernet0/1"/>
         <interface id="1" name="GigabitEthernet0/2"/>
     </node>
-    <node name="R2" type="SIMPLE" subtype="IOSv" location="910,74">
+    <node name="R2" type="SIMPLE" subtype="IOSv" location="904,68">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">!
-! Last configuration change at 14:55:08 UTC Wed Oct 17 2018
+! Last configuration change at 18:54:03 UTC Wed Oct 24 2018 by cisco
 !
 version 15.6
 service timestamps debug datetime msec
@@ -263,7 +271,7 @@ interface Loopback0
 interface GigabitEthernet0/0
  description OOB Management
  vrf forwarding Mgmt-intf
- ip address 10.255.0.142 255.255.0.0
+ ip address 172.16.1.93 255.255.255.0
  duplex full
  speed auto
  media-type rj45
@@ -276,6 +284,8 @@ interface GigabitEthernet0/1
  duplex full
  speed auto
  media-type rj45
+ ipv6 address 2026::12:2/122
+ ipv6 ospf 6 area 12
 !
 interface GigabitEthernet0/2
  description to R3
@@ -284,6 +294,13 @@ interface GigabitEthernet0/2
  duplex full
  speed auto
  media-type rj45
+ ipv6 address 2026::1:1/122
+ ipv6 ospf 6 area 0
+!
+router ospfv3 6
+ !
+ address-family ipv6 unicast
+ exit-address-family
 !
 router ospf 1
  router-id 2.2.2.2
@@ -349,11 +366,11 @@ end
         <interface id="0" name="GigabitEthernet0/1"/>
         <interface id="1" name="GigabitEthernet0/2"/>
     </node>
-    <node name="R3" type="SIMPLE" subtype="IOSv" location="917,218">
+    <node name="R3" type="SIMPLE" subtype="IOSv" location="904,212">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">!
-! Last configuration change at 15:11:55 UTC Wed Oct 17 2018
+! Last configuration change at 18:15:45 UTC Wed Oct 24 2018 by cisco
 !
 version 15.6
 service timestamps debug datetime msec
@@ -428,10 +445,17 @@ interface Loopback0
  ip address 3.3.3.3 255.255.255.255
  ip ospf 1 area 0
 !
+interface Tunnel34
+ no ip address
+ ipv6 address 2026::34:1/122
+ ipv6 ospf 6 area 34
+ tunnel source 10.1.1.9
+ tunnel destination 10.1.1.10
+!
 interface GigabitEthernet0/0
  description OOB Management
  vrf forwarding Mgmt-intf
- ip address 10.255.0.143 255.255.0.0
+ ip address 172.16.1.94 255.255.255.0
  duplex full
  speed auto
  media-type rj45
@@ -452,6 +476,13 @@ interface GigabitEthernet0/2
  duplex full
  speed auto
  media-type rj45
+ ipv6 address 2026::1:2/122
+ ipv6 ospf 6 area 0
+!
+router ospfv3 6
+ !
+ address-family ipv6 unicast
+ exit-address-family
 !
 router ospf 1
  router-id 3.3.3.3
@@ -518,11 +549,11 @@ end
         <interface id="0" name="GigabitEthernet0/1"/>
         <interface id="1" name="GigabitEthernet0/2"/>
     </node>
-    <node name="R4" type="SIMPLE" subtype="IOSv" location="920,336">
+    <node name="R4" type="SIMPLE" subtype="IOSv" location="904,332">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">!
-! Last configuration change at 15:25:07 UTC Wed Oct 17 2018
+! Last configuration change at 18:50:56 UTC Wed Oct 24 2018 by cisco
 !
 version 15.6
 service timestamps debug datetime msec
@@ -562,6 +593,10 @@ mmi snmp-timeout 180
 !
 !
 !
+ip dhcp pool VLAN10
+ network 10.2.1.0 255.255.255.0
+ default-router 10.2.1.254 
+!
 !
 !
 no ip domain lookup
@@ -597,10 +632,17 @@ interface Loopback0
  ip address 4.4.4.4 255.255.255.255
  ip ospf 1 area 34
 !
+interface Tunnel34
+ no ip address
+ ipv6 address 2026::34:2/122
+ ipv6 ospf 6 area 34
+ tunnel source 10.1.1.10
+ tunnel destination 10.1.1.9
+!
 interface GigabitEthernet0/0
  description OOB Management
  vrf forwarding Mgmt-intf
- ip address 10.255.0.144 255.255.0.0
+ ip address 172.16.1.95 255.255.255.0
  duplex full
  speed auto
  media-type rj45
@@ -620,6 +662,8 @@ interface GigabitEthernet0/2
  duplex full
  speed auto
  media-type rj45
+ ipv6 address 2026::2:1/122
+ ipv6 rip RIP_ZONE enable
 !
 interface GigabitEthernet0/3
  description to DSW2
@@ -634,6 +678,12 @@ router eigrp 10
  network 10.1.4.8 0.0.0.3
  redistribute ospf 1 metric 100000 0 255 1 1500
 !
+router ospfv3 6
+ !
+ address-family ipv6 unicast
+  redistribute rip RIP_ZONE include-connected
+ exit-address-family
+!
 router ospf 1
  router-id 4.4.4.4
  area 34 nssa no-summary
@@ -647,6 +697,9 @@ no ip http secure-server
 ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 ip ssh server algorithm authentication password
 ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+ipv6 router rip RIP_ZONE
+ redistribute ospf 6 metric 1 include-connected
 !
 ipv6 ioam timestamp
 !
@@ -701,11 +754,11 @@ end
         <interface id="1" name="GigabitEthernet0/2"/>
         <interface id="2" name="GigabitEthernet0/3"/>
     </node>
-    <node name="DSW1" type="SIMPLE" subtype="IOSvL2" location="651,229">
+    <node name="DSW1" type="SIMPLE" subtype="IOSvL2" location="668,234">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">!
-! Last configuration change at 13:44:35 UTC Wed Oct 17 2018
+! Last configuration change at 18:41:43 UTC Wed Oct 24 2018
 !
 version 15.2
 service timestamps debug datetime msec
@@ -742,7 +795,8 @@ vtp mode transparent
 !
 no ip domain-lookup
 ip cef
-no ipv6 cef
+ipv6 unicast-routing
+ipv6 cef
 !
 !
 !
@@ -753,6 +807,8 @@ vlan internal allocation policy ascending
 !
 vlan 2
  name ank_vlan2
+!
+vlan 10,20,200 
 !
 ! 
 !
@@ -777,48 +833,76 @@ interface Loopback1
 interface Port-channel12
  no switchport
  ip address 10.2.4.13 255.255.255.252
+ ipv6 address 2026::3:1/122
+ ipv6 rip RIP_ZONE enable
+!
+interface Port-channel13
+ switchport access vlan 2
+ switchport trunk allowed vlan 10,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Port-channel14
+ switchport access vlan 2
+ switchport trunk allowed vlan 20,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
 !
 interface GigabitEthernet0/0
  description OOB management
  no switchport
  vrf forwarding Mgmt-intf
- ip address 10.255.0.137 255.255.0.0
+ ip address 172.16.1.88 255.255.255.0
  negotiation auto
  no cdp enable
 !
 interface GigabitEthernet0/1
  description to ASW1
  switchport access vlan 2
- switchport mode access
+ switchport trunk allowed vlan 10,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
  media-type rj45
  negotiation auto
+ channel-group 13 mode desirable
 !
 interface GigabitEthernet0/2
  description to ASW1
  switchport access vlan 2
- switchport mode access
+ switchport trunk allowed vlan 10,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
  media-type rj45
  negotiation auto
+ channel-group 13 mode desirable
 !
 interface GigabitEthernet0/3
  description to R4
  no switchport
  ip address 10.1.4.6 255.255.255.252
  negotiation auto
+ ipv6 address 2026::2:2/122
+ ipv6 rip RIP_ZONE enable
 !
 interface GigabitEthernet1/0
  description to ASW2
  switchport access vlan 2
- switchport mode access
+ switchport trunk allowed vlan 20,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
  media-type rj45
  negotiation auto
+ channel-group 14 mode desirable
 !
 interface GigabitEthernet1/1
  description to ASW2
  switchport access vlan 2
- switchport mode access
+ switchport trunk allowed vlan 20,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
  media-type rj45
  negotiation auto
+ channel-group 14 mode desirable
 !
 interface GigabitEthernet1/2
  description to DSW2
@@ -834,11 +918,30 @@ interface GigabitEthernet1/3
  negotiation auto
  channel-group 12 mode desirable
 !
+interface Vlan10
+ ip address 10.2.1.1 255.255.255.0
+ ip helper-address 4.4.4.4 
+ standby 10 ip 10.2.1.254
+ standby 10 priority 255
+ standby 10 preempt
+!
+interface Vlan20
+ ip address 10.2.2.2 255.255.255.0
+ ip helper-address 4.4.4.4 
+ standby 20 ip 10.2.2.254
+ standby 20 priority 1
+!
+interface Vlan200
+ ip address 192.168.1.129 255.255.255.224
+!
 !
 router eigrp 10
  network 10.1.4.4 0.0.0.3
+ network 10.2.1.0 0.0.0.255
+ network 10.2.2.0 0.0.0.255
  network 10.2.4.12 0.0.0.3
  network 11.11.11.11 0.0.0.0
+ network 192.168.1.128 0.0.0.31
 !
 ip forward-protocol nd
 !
@@ -846,6 +949,8 @@ no ip http server
 no ip http secure-server
 !
 !
+!
+ipv6 router rip RIP_ZONE
 !
 !
 !
@@ -902,11 +1007,11 @@ end
         <interface id="5" name="GigabitEthernet1/2"/>
         <interface id="6" name="GigabitEthernet1/3"/>
     </node>
-    <node name="DSW2" type="SIMPLE" subtype="IOSvL2" location="662,423">
+    <node name="DSW2" type="SIMPLE" subtype="IOSvL2" location="668,450">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">!
-! Last configuration change at 13:44:43 UTC Wed Oct 17 2018
+! Last configuration change at 18:41:13 UTC Wed Oct 24 2018
 !
 version 15.2
 service timestamps debug datetime msec
@@ -943,7 +1048,8 @@ vtp mode transparent
 !
 no ip domain-lookup
 ip cef
-no ipv6 cef
+ipv6 unicast-routing
+ipv6 cef
 !
 !
 !
@@ -954,6 +1060,8 @@ vlan internal allocation policy ascending
 !
 vlan 2
  name ank_vlan2
+!
+vlan 10,20,200 
 !
 ! 
 !
@@ -975,28 +1083,46 @@ interface Loopback0
 interface Port-channel12
  no switchport
  ip address 10.2.4.14 255.255.255.252
+ ipv6 address 2026::3:1/122
+ ipv6 address 2026::3:2/122
+ ipv6 rip RIP_ZONE enable
+!
+interface Port-channel23
+ switchport access vlan 2
+ switchport trunk allowed vlan 10,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Port-channel24
+ switchport access vlan 2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
 !
 interface GigabitEthernet0/0
  description OOB management
  no switchport
  vrf forwarding Mgmt-intf
- ip address 10.255.0.138 255.255.0.0
+ ip address 172.16.1.89 255.255.255.0
  negotiation auto
  no cdp enable
 !
 interface GigabitEthernet0/1
  description to ASW2
  switchport access vlan 2
- switchport mode access
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
  media-type rj45
  negotiation auto
+ channel-group 24 mode desirable
 !
 interface GigabitEthernet0/2
  description to ASW2
  switchport access vlan 2
- switchport mode access
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
  media-type rj45
  negotiation auto
+ channel-group 24 mode desirable
 !
 interface GigabitEthernet0/3
  description to R4
@@ -1007,16 +1133,22 @@ interface GigabitEthernet0/3
 interface GigabitEthernet1/0
  description to ASW1
  switchport access vlan 2
- switchport mode access
+ switchport trunk allowed vlan 10,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
  media-type rj45
  negotiation auto
+ channel-group 23 mode desirable
 !
 interface GigabitEthernet1/1
  description to ASW1
  switchport access vlan 2
- switchport mode access
+ switchport trunk allowed vlan 10,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
  media-type rj45
  negotiation auto
+ channel-group 23 mode desirable
 !
 interface GigabitEthernet1/2
  description to DSW1
@@ -1032,11 +1164,30 @@ interface GigabitEthernet1/3
  negotiation auto
  channel-group 12 mode desirable
 !
+interface Vlan10
+ ip address 10.2.1.2 255.255.255.0
+ ip helper-address 4.4.4.4 
+ standby 10 ip 10.2.1.254
+ standby 10 priority 1
+!
+interface Vlan20
+ ip address 10.2.2.1 255.255.255.0
+ ip helper-address 4.4.4.4 
+ standby 20 ip 10.2.2.254
+ standby 20 priority 255
+ standby 20 preempt
+!
+interface Vlan200
+ ip address 192.168.1.130 255.255.255.224
+!
 !
 router eigrp 10
  network 10.1.4.8 0.0.0.3
+ network 10.2.1.0 0.0.0.255
+ network 10.2.2.0 0.0.0.255
  network 10.2.4.12 0.0.0.3
  network 22.22.22.22 0.0.0.0
+ network 192.168.1.128 0.0.0.31
 !
 ip forward-protocol nd
 !
@@ -1044,6 +1195,8 @@ no ip http server
 no ip http secure-server
 !
 !
+!
+ipv6 router rip RIP_ZONE
 !
 !
 !
@@ -1100,7 +1253,7 @@ end
         <interface id="5" name="GigabitEthernet1/2"/>
         <interface id="6" name="GigabitEthernet1/3"/>
     </node>
-    <node name="WebServer" type="SIMPLE" subtype="server" location="318,79">
+    <node name="WebServer" type="SIMPLE" subtype="server" location="311,63">
         <extensions>
             <entry key="config" type="String">#cloud-config
 bootcmd:
@@ -1152,7 +1305,7 @@ write_files:
         </extensions>
         <interface id="0" name="eth1"/>
     </node>
-    <node name="Client1" type="SIMPLE" subtype="server" location="165,166">
+    <node name="Client1" type="SIMPLE" subtype="server" location="167,159">
         <extensions>
             <entry key="config" type="String">#cloud-config
 bootcmd:
@@ -1204,7 +1357,7 @@ write_files:
         </extensions>
         <interface id="0" name="eth1"/>
     </node>
-    <node name="Client2" type="SIMPLE" subtype="server" location="164,271">
+    <node name="Client2" type="SIMPLE" subtype="server" location="167,303">
         <extensions>
             <entry key="config" type="String">#cloud-config
 bootcmd:
@@ -1256,7 +1409,7 @@ write_files:
         </extensions>
         <interface id="0" name="eth1"/>
     </node>
-    <node name="FTPServer" type="SIMPLE" subtype="server" location="138,473">
+    <node name="FTPServer" type="SIMPLE" subtype="server" location="164,447">
         <extensions>
             <entry key="config" type="String">#cloud-config
 bootcmd:
@@ -1308,11 +1461,11 @@ write_files:
         </extensions>
         <interface id="0" name="eth1"/>
     </node>
-    <node name="R-BGP" type="SIMPLE" subtype="IOSv" location="471,81">
+    <node name="R-BGP" type="SIMPLE" subtype="IOSv" location="477,68">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">!
-! Last configuration change at 14:25:17 UTC Wed Oct 17 2018
+! Last configuration change at 14:49:03 UTC Wed Oct 24 2018
 !
 version 15.6
 service timestamps debug datetime msec
@@ -1389,7 +1542,7 @@ interface Loopback0
 interface GigabitEthernet0/0
  description OOB Management
  vrf forwarding Mgmt-intf
- ip address 10.255.0.140 255.255.0.0
+ ip address 172.16.1.91 255.255.255.0
  duplex full
  speed auto
  media-type rj45
@@ -1480,7 +1633,7 @@ end
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">!
-! Last configuration change at 13:45:26 UTC Wed Oct 17 2018
+! Last configuration change at 15:47:55 UTC Wed Oct 24 2018
 !
 version 15.2
 service timestamps debug datetime msec
@@ -1528,7 +1681,8 @@ vlan internal allocation policy ascending
 !
 vlan 2
  name ank_vlan2
-no cdp run
+!
+vlan 10,20,200 
 !
 ! 
 !
@@ -1547,26 +1701,45 @@ interface Loopback0
  description Loopback
  no ip address
 !
+interface Port-channel13
+ switchport access vlan 2
+ switchport trunk allowed vlan 10,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Port-channel23
+ switchport access vlan 2
+ switchport trunk allowed vlan 10,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
 interface GigabitEthernet0/0
  description OOB management
  no switchport
  vrf forwarding Mgmt-intf
- ip address 10.255.0.146 255.255.0.0
+ ip address 172.16.1.84 255.255.255.0
  negotiation auto
+ no cdp enable
 !
 interface GigabitEthernet0/1
  description to DSW1
  switchport access vlan 2
- switchport mode access
+ switchport trunk allowed vlan 10,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
  media-type rj45
  negotiation auto
+ channel-group 13 mode desirable
 !
 interface GigabitEthernet0/2
  description to DSW1
  switchport access vlan 2
- switchport mode access
+ switchport trunk allowed vlan 10,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
  media-type rj45
  negotiation auto
+ channel-group 13 mode desirable
 !
 interface GigabitEthernet0/3
  description GigabitEthernet0/3
@@ -1578,30 +1751,39 @@ interface GigabitEthernet0/3
 interface GigabitEthernet1/0
  description to DSW2
  switchport access vlan 2
- switchport mode access
+ switchport trunk allowed vlan 10,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
  media-type rj45
  negotiation auto
+ channel-group 23 mode desirable
 !
 interface GigabitEthernet1/1
  description to DSW2
  switchport access vlan 2
- switchport mode access
+ switchport trunk allowed vlan 10,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
  media-type rj45
  negotiation auto
+ channel-group 23 mode desirable
 !
 interface GigabitEthernet1/2
  description to Client1
- switchport access vlan 2
+ switchport access vlan 10
  switchport mode access
  media-type rj45
  negotiation auto
 !
 interface GigabitEthernet1/3
  description to Client2
- switchport access vlan 2
+ switchport access vlan 10
  switchport mode access
  media-type rj45
  negotiation auto
+!
+interface Vlan200
+ ip address 192.168.1.131 255.255.255.224
 !
 ip forward-protocol nd
 !
@@ -1665,11 +1847,11 @@ end
         <interface id="5" name="GigabitEthernet1/2"/>
         <interface id="6" name="GigabitEthernet1/3"/>
     </node>
-    <node name="ASW2" type="SIMPLE" subtype="IOSvL2" location="337,427">
+    <node name="ASW2" type="SIMPLE" subtype="IOSvL2" location="332,450">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">!
-! Last configuration change at 13:43:46 UTC Wed Oct 17 2018
+! Last configuration change at 15:38:22 UTC Wed Oct 24 2018
 !
 version 15.2
 service timestamps debug datetime msec
@@ -1717,7 +1899,8 @@ vlan internal allocation policy ascending
 !
 vlan 2
  name ank_vlan2
-no cdp run
+!
+vlan 10,20,200 
 !
 ! 
 !
@@ -1736,30 +1919,49 @@ interface Loopback0
  description Loopback
  no ip address
 !
+interface Port-channel14
+ switchport access vlan 2
+ switchport trunk allowed vlan 20,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Port-channel24
+ switchport access vlan 2
+ switchport trunk allowed vlan 20,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
 interface GigabitEthernet0/0
  description OOB management
  no switchport
  vrf forwarding Mgmt-intf
- ip address 10.255.0.134 255.255.0.0
+ ip address 172.16.1.85 255.255.255.0
  negotiation auto
+ no cdp enable
 !
 interface GigabitEthernet0/1
  description to DSW2
  switchport access vlan 2
- switchport mode access
+ switchport trunk allowed vlan 20,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
  media-type rj45
  negotiation auto
+ channel-group 24 mode desirable
 !
 interface GigabitEthernet0/2
  description to DSW2
  switchport access vlan 2
- switchport mode access
+ switchport trunk allowed vlan 20,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
  media-type rj45
  negotiation auto
+ channel-group 24 mode desirable
 !
 interface GigabitEthernet0/3
  description to FTPServer
- switchport access vlan 2
+ switchport access vlan 20
  switchport mode access
  media-type rj45
  negotiation auto
@@ -1767,16 +1969,22 @@ interface GigabitEthernet0/3
 interface GigabitEthernet1/0
  description to DSW1
  switchport access vlan 2
- switchport mode access
+ switchport trunk allowed vlan 20,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
  media-type rj45
  negotiation auto
+ channel-group 14 mode desirable
 !
 interface GigabitEthernet1/1
  description to DSW1
  switchport access vlan 2
- switchport mode access
+ switchport trunk allowed vlan 20,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
  media-type rj45
  negotiation auto
+ channel-group 14 mode desirable
 !
 interface GigabitEthernet1/2
  description GigabitEthernet1/2
@@ -1791,6 +1999,9 @@ interface GigabitEthernet1/3
  switchport mode access
  media-type rj45
  negotiation auto
+!
+interface Vlan200
+ ip address 192.168.1.132 255.255.255.224
 !
 ip forward-protocol nd
 !
