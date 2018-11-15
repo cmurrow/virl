@@ -2001,198 +2001,198 @@ end
     <node name="R7" type="SIMPLE" subtype="IOSv" location="124,318">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
-            <entry key="config" type="String">!
-! Last configuration change at 20:37:11 UTC Mon Nov 12 2018
-!
-version 15.6
-service timestamps debug datetime msec
-service timestamps log datetime msec
-no service password-encryption
-!
-hostname R7
-!
-boot-start-marker
-boot-end-marker
-!
-!
-vrf definition Mgmt-intf
- !
- address-family ipv4
- exit-address-family
- !
- address-family ipv6
- exit-address-family
-!
-enable password cisco
-!
-no aaa new-model
-!
-!
-!
-mmi polling-interval 60
-no mmi auto-configure
-no mmi pvc
-mmi snmp-timeout 180
-!
-!
-!
-!
-!
-!
-!
-!
-ip vrf TEST
- rd 12345:77
- route-target export 77:77
- route-target import 77:77
-!
-!
-!
-!
-no ip domain lookup
-ip domain name virl.info
-ip cef
-ipv6 unicast-routing
-ipv6 cef
-!
-multilink bundle-name authenticated
-!
-!
-!
-!
-username cisco privilege 15 secret 5 $1$Vnrh$OQQlPa0t0xMGe0MqNSh9r/
-!
-redundancy
-!
-!
-! 
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-interface Loopback0
- description Loopback
- ip vrf forwarding TEST
- ip address 7.7.7.7 255.255.255.255
-!
-interface Loopback55
- ip vrf forwarding TEST
- ip address 55.55.55.55 255.255.255.255
-!
-interface GigabitEthernet0/0
- description OOB Management
- vrf forwarding Mgmt-intf
- ip address 172.16.1.78 255.255.255.0
- duplex full
- speed auto
- media-type rj45
-!
-interface GigabitEthernet0/1
- description to ISP2
- ip vrf forwarding TEST
- ip address 102.2.2.2 255.255.255.252
- duplex full
- speed auto
- media-type rj45
-!
-interface GigabitEthernet0/2
- description GigabitEthernet0/2
- no ip address
- duplex full
- speed auto
- media-type rj45
-!
-interface GigabitEthernet0/3
- description GigabitEthernet0/3
- no ip address
- duplex full
- speed auto
- media-type rj45
-!
-router bgp 12345
- bgp router-id 7.7.7.7
- bgp log-neighbor-changes
- !
- address-family ipv4 vrf TEST
-  network 7.7.7.7 mask 255.255.255.255
-  network 55.55.55.55 mask 255.255.255.255
-  network 102.2.2.0 mask 255.255.255.252
-  neighbor 102.2.2.1 remote-as 20002
-  neighbor 102.2.2.1 activate
-  neighbor 102.2.2.1 send-community
-  neighbor 102.2.2.1 route-map loopback out
- exit-address-family
-!
-ip forward-protocol nd
-!
-ip bgp-community new-format
-!
-no ip http server
-no ip http secure-server
-ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
-ip ssh server algorithm authentication password
-ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
-!
-!
-ip prefix-list loopback seq 5 permit 55.55.55.55/32
-ipv6 ioam timestamp
-!
-route-map loopback permit 10
- match ip address prefix-list loopback
- set community 65001:1
-!
-!
-!
-control-plane
-!
-banner exec `
-**************************************************************************
-* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
-* education. IOSv is provided as-is and is not supported by Cisco's      *
-* Technical Advisory Center. Any use or disclosure, in whole or in part, *
-* of the IOSv Software or Documentation to any third party for any       *
-* purposes is expressly prohibited except as otherwise authorized by     *
-* Cisco in writing.                                                      *
-**************************************************************************`
-banner incoming `
-**************************************************************************
-* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
-* education. IOSv is provided as-is and is not supported by Cisco's      *
-* Technical Advisory Center. Any use or disclosure, in whole or in part, *
-* of the IOSv Software or Documentation to any third party for any       *
-* purposes is expressly prohibited except as otherwise authorized by     *
-* Cisco in writing.                                                      *
-**************************************************************************`
-banner login `
-**************************************************************************
-* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
-* education. IOSv is provided as-is and is not supported by Cisco's      *
-* Technical Advisory Center. Any use or disclosure, in whole or in part, *
-* of the IOSv Software or Documentation to any third party for any       *
-* purposes is expressly prohibited except as otherwise authorized by     *
-* Cisco in writing.                                                      *
-**************************************************************************`
-!
-line con 0
- password cisco
-line aux 0
-line vty 0 4
- exec-timeout 720 0
- password cisco
- login local
- transport input telnet ssh
-!
-no scheduler allocate
-!
-end
-
+            <entry key="config" type="String">!&#xD;
+! Last configuration change at 00:40:06 UTC Thu Nov 15 2018&#xD;
+!&#xD;
+version 15.6&#xD;
+service timestamps debug datetime msec&#xD;
+service timestamps log datetime msec&#xD;
+no service password-encryption&#xD;
+!&#xD;
+hostname R7&#xD;
+!&#xD;
+boot-start-marker&#xD;
+boot-end-marker&#xD;
+!&#xD;
+!&#xD;
+vrf definition Mgmt-intf&#xD;
+ !&#xD;
+ address-family ipv4&#xD;
+ exit-address-family&#xD;
+ !&#xD;
+ address-family ipv6&#xD;
+ exit-address-family&#xD;
+!&#xD;
+enable password cisco&#xD;
+!&#xD;
+no aaa new-model&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+mmi polling-interval 60&#xD;
+no mmi auto-configure&#xD;
+no mmi pvc&#xD;
+mmi snmp-timeout 180&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+ip vrf TEST&#xD;
+ rd 12345:77&#xD;
+ route-target export 77:77&#xD;
+ route-target import 77:77&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+no ip domain lookup&#xD;
+ip domain name virl.info&#xD;
+ip cef&#xD;
+ipv6 unicast-routing&#xD;
+ipv6 cef&#xD;
+!&#xD;
+multilink bundle-name authenticated&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+username cisco privilege 15 secret 5 $1$Vnrh$OQQlPa0t0xMGe0MqNSh9r/&#xD;
+!&#xD;
+redundancy&#xD;
+!&#xD;
+!&#xD;
+! &#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+interface Loopback0&#xD;
+ description Loopback&#xD;
+ ip vrf forwarding TEST&#xD;
+ ip address 7.7.7.7 255.255.255.255&#xD;
+!&#xD;
+interface Loopback55&#xD;
+ ip vrf forwarding TEST&#xD;
+ ip address 55.55.55.55 255.255.255.255&#xD;
+!&#xD;
+interface GigabitEthernet0/0&#xD;
+ description OOB Management&#xD;
+ vrf forwarding Mgmt-intf&#xD;
+ ip address 10.255.1.14 255.255.0.0&#xD;
+ duplex full&#xD;
+ speed auto&#xD;
+ media-type rj45&#xD;
+!&#xD;
+interface GigabitEthernet0/1&#xD;
+ description to ISP2&#xD;
+ ip vrf forwarding TEST&#xD;
+ ip address 102.2.2.2 255.255.255.252&#xD;
+ duplex full&#xD;
+ speed auto&#xD;
+ media-type rj45&#xD;
+!&#xD;
+interface GigabitEthernet0/2&#xD;
+ description GigabitEthernet0/2&#xD;
+ no ip address&#xD;
+ duplex full&#xD;
+ speed auto&#xD;
+ media-type rj45&#xD;
+!&#xD;
+interface GigabitEthernet0/3&#xD;
+ description GigabitEthernet0/3&#xD;
+ no ip address&#xD;
+ duplex full&#xD;
+ speed auto&#xD;
+ media-type rj45&#xD;
+!&#xD;
+router bgp 12345&#xD;
+ bgp router-id 7.7.7.7&#xD;
+ bgp log-neighbor-changes&#xD;
+ !&#xD;
+ address-family ipv4 vrf TEST&#xD;
+  network 7.7.7.7 mask 255.255.255.255&#xD;
+  network 55.55.55.55 mask 255.255.255.255&#xD;
+  network 102.2.2.0 mask 255.255.255.252&#xD;
+  neighbor 102.2.2.1 remote-as 20002&#xD;
+  neighbor 102.2.2.1 activate&#xD;
+  neighbor 102.2.2.1 send-community extended&#xD;
+  neighbor 102.2.2.1 route-map loopback out&#xD;
+ exit-address-family&#xD;
+!&#xD;
+ip forward-protocol nd&#xD;
+!&#xD;
+ip bgp-community new-format&#xD;
+!&#xD;
+no ip http server&#xD;
+no ip http secure-server&#xD;
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr&#xD;
+ip ssh server algorithm authentication password&#xD;
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr&#xD;
+!&#xD;
+!&#xD;
+ip prefix-list loopback seq 5 permit 55.55.55.55/32&#xD;
+ipv6 ioam timestamp&#xD;
+!&#xD;
+route-map loopback permit 10&#xD;
+ match ip address prefix-list loopback&#xD;
+ set extcommunity rt 65001:1&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+control-plane&#xD;
+!&#xD;
+banner exec `&#xD;
+**************************************************************************&#xD;
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *&#xD;
+* education. IOSv is provided as-is and is not supported by Cisco's      *&#xD;
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *&#xD;
+* of the IOSv Software or Documentation to any third party for any       *&#xD;
+* purposes is expressly prohibited except as otherwise authorized by     *&#xD;
+* Cisco in writing.                                                      *&#xD;
+**************************************************************************`&#xD;
+banner incoming `&#xD;
+**************************************************************************&#xD;
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *&#xD;
+* education. IOSv is provided as-is and is not supported by Cisco's      *&#xD;
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *&#xD;
+* of the IOSv Software or Documentation to any third party for any       *&#xD;
+* purposes is expressly prohibited except as otherwise authorized by     *&#xD;
+* Cisco in writing.                                                      *&#xD;
+**************************************************************************`&#xD;
+banner login `&#xD;
+**************************************************************************&#xD;
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *&#xD;
+* education. IOSv is provided as-is and is not supported by Cisco's      *&#xD;
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *&#xD;
+* of the IOSv Software or Documentation to any third party for any       *&#xD;
+* purposes is expressly prohibited except as otherwise authorized by     *&#xD;
+* Cisco in writing.                                                      *&#xD;
+**************************************************************************`&#xD;
+!&#xD;
+line con 0&#xD;
+ password cisco&#xD;
+line aux 0&#xD;
+line vty 0 4&#xD;
+ exec-timeout 720 0&#xD;
+ password cisco&#xD;
+ login local&#xD;
+ transport input telnet ssh&#xD;
+!&#xD;
+no scheduler allocate&#xD;
+!&#xD;
+end&#xD;
+&#xD;
 </entry>
         </extensions>
         <interface id="0" name="GigabitEthernet0/1"/>
@@ -2202,199 +2202,199 @@ end
     <node name="R16" type="SIMPLE" subtype="IOSv" location="328,318">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
-            <entry key="config" type="String">!
-! Last configuration change at 20:38:30 UTC Mon Nov 12 2018
-!
-version 15.6
-service timestamps debug datetime msec
-service timestamps log datetime msec
-no service password-encryption
-!
-hostname R16
-!
-boot-start-marker
-boot-end-marker
-!
-!
-vrf definition Mgmt-intf
- !
- address-family ipv4
- exit-address-family
- !
- address-family ipv6
- exit-address-family
-!
-enable password cisco
-!
-no aaa new-model
-!
-!
-!
-mmi polling-interval 60
-no mmi auto-configure
-no mmi pvc
-mmi snmp-timeout 180
-!
-!
-!
-!
-!
-!
-!
-!
-ip vrf TEST
- rd 34567:16
- route-target export 16:16
- route-target import 16:16
-!
-!
-!
-!
-no ip domain lookup
-ip domain name virl.info
-ip cef
-ipv6 unicast-routing
-ipv6 cef
-!
-multilink bundle-name authenticated
-!
-!
-!
-!
-username cisco privilege 15 secret 5 $1$gdfy$sGGMkP6DQQcGJR6vNnrH7/
-!
-redundancy
-!
-!
-! 
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-interface Loopback0
- description Loopback
- ip vrf forwarding TEST
- ip address 16.16.16.16 255.255.255.255
-!
-interface Loopback55
- ip vrf forwarding TEST
- ip address 55.55.55.55 255.255.255.255
-!
-interface GigabitEthernet0/0
- description OOB Management
- vrf forwarding Mgmt-intf
- ip address 172.16.1.73 255.255.255.0
- duplex full
- speed auto
- media-type rj45
-!
-interface GigabitEthernet0/1
- description GigabitEthernet0/1
- no ip address
- duplex full
- speed auto
- media-type rj45
-!
-interface GigabitEthernet0/2
- description to ISP2
- ip vrf forwarding TEST
- ip address 102.1.1.2 255.255.255.252
- duplex full
- speed auto
- media-type rj45
-!
-interface GigabitEthernet0/3
- description GigabitEthernet0/3
- no ip address
- duplex full
- speed auto
- media-type rj45
-!
-router bgp 34567
- bgp router-id 16.16.16.16
- bgp log-neighbor-changes
- !
- address-family ipv4 vrf TEST
-  network 16.16.16.16 mask 255.255.255.255
-  network 55.55.55.55 mask 255.255.255.255
-  network 102.1.1.0 mask 255.255.255.252
-  neighbor 102.1.1.1 remote-as 20002
-  neighbor 102.1.1.1 activate
-  neighbor 102.1.1.1 send-community
-  neighbor 102.1.1.1 route-map loopback out
- exit-address-family
-!
-ip forward-protocol nd
-!
-ip bgp-community new-format
-!
-no ip http server
-no ip http secure-server
-ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
-ip ssh server algorithm authentication password
-ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
-!
-!
-ip prefix-list loopback seq 5 permit 55.55.55.55/32
-ipv6 ioam timestamp
-!
-route-map loopback permit 10
- match ip address prefix-list loopback
- set community 65001:1
-!
-!
-!
-control-plane
-!
-banner exec `
-**************************************************************************
-* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
-* education. IOSv is provided as-is and is not supported by Cisco's      *
-* Technical Advisory Center. Any use or disclosure, in whole or in part, *
-* of the IOSv Software or Documentation to any third party for any       *
-* purposes is expressly prohibited except as otherwise authorized by     *
-* Cisco in writing.                                                      *
-**************************************************************************`
-banner incoming `
-**************************************************************************
-* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
-* education. IOSv is provided as-is and is not supported by Cisco's      *
-* Technical Advisory Center. Any use or disclosure, in whole or in part, *
-* of the IOSv Software or Documentation to any third party for any       *
-* purposes is expressly prohibited except as otherwise authorized by     *
-* Cisco in writing.                                                      *
-**************************************************************************`
-banner login `
-**************************************************************************
-* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
-* education. IOSv is provided as-is and is not supported by Cisco's      *
-* Technical Advisory Center. Any use or disclosure, in whole or in part, *
-* of the IOSv Software or Documentation to any third party for any       *
-* purposes is expressly prohibited except as otherwise authorized by     *
-* Cisco in writing.                                                      *
-**************************************************************************`
-!
-line con 0
- password cisco
-line aux 0
-line vty 0 4
- exec-timeout 720 0
- password cisco
- login local
- transport input telnet ssh
-!
-no scheduler allocate
-!
-end
-
-</entry>
+            <entry key="config" type="String">!&#xD;
+! Last configuration change at 00:49:53 UTC Thu Nov 15 2018&#xD;
+!&#xD;
+version 15.6&#xD;
+service timestamps debug datetime msec&#xD;
+service timestamps log datetime msec&#xD;
+no service password-encryption&#xD;
+!&#xD;
+hostname R16&#xD;
+!&#xD;
+boot-start-marker&#xD;
+boot-end-marker&#xD;
+!&#xD;
+!&#xD;
+vrf definition Mgmt-intf&#xD;
+ !&#xD;
+ address-family ipv4&#xD;
+ exit-address-family&#xD;
+ !&#xD;
+ address-family ipv6&#xD;
+ exit-address-family&#xD;
+!&#xD;
+enable password cisco&#xD;
+!&#xD;
+no aaa new-model&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+mmi polling-interval 60&#xD;
+no mmi auto-configure&#xD;
+no mmi pvc&#xD;
+mmi snmp-timeout 180&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+ip vrf TEST&#xD;
+ rd 34567:16&#xD;
+ route-target export 16:16&#xD;
+ route-target import 16:16&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+no ip domain lookup&#xD;
+ip domain name virl.info&#xD;
+ip cef&#xD;
+ipv6 unicast-routing&#xD;
+ipv6 cef&#xD;
+!&#xD;
+multilink bundle-name authenticated&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+username cisco privilege 15 secret 5 $1$gdfy$sGGMkP6DQQcGJR6vNnrH7/&#xD;
+!&#xD;
+redundancy&#xD;
+!&#xD;
+!&#xD;
+! &#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+interface Loopback0&#xD;
+ description Loopback&#xD;
+ ip vrf forwarding TEST&#xD;
+ ip address 16.16.16.16 255.255.255.255&#xD;
+!&#xD;
+interface Loopback55&#xD;
+ ip vrf forwarding TEST&#xD;
+ ip address 55.55.55.55 255.255.255.255&#xD;
+!&#xD;
+interface GigabitEthernet0/0&#xD;
+ description OOB Management&#xD;
+ vrf forwarding Mgmt-intf&#xD;
+ ip address 10.255.1.16 255.255.0.0&#xD;
+ duplex full&#xD;
+ speed auto&#xD;
+ media-type rj45&#xD;
+!&#xD;
+interface GigabitEthernet0/1&#xD;
+ description GigabitEthernet0/1&#xD;
+ no ip address&#xD;
+ duplex full&#xD;
+ speed auto&#xD;
+ media-type rj45&#xD;
+!&#xD;
+interface GigabitEthernet0/2&#xD;
+ description to ISP2&#xD;
+ ip vrf forwarding TEST&#xD;
+ ip address 102.1.1.2 255.255.255.252&#xD;
+ duplex full&#xD;
+ speed auto&#xD;
+ media-type rj45&#xD;
+!&#xD;
+interface GigabitEthernet0/3&#xD;
+ description GigabitEthernet0/3&#xD;
+ no ip address&#xD;
+ duplex full&#xD;
+ speed auto&#xD;
+ media-type rj45&#xD;
+!&#xD;
+router bgp 34567&#xD;
+ bgp router-id 16.16.16.16&#xD;
+ bgp log-neighbor-changes&#xD;
+ !&#xD;
+ address-family ipv4 vrf TEST&#xD;
+  network 16.16.16.16 mask 255.255.255.255&#xD;
+  network 55.55.55.55 mask 255.255.255.255&#xD;
+  network 102.1.1.0 mask 255.255.255.252&#xD;
+  neighbor 102.1.1.1 remote-as 20002&#xD;
+  neighbor 102.1.1.1 activate&#xD;
+  neighbor 102.1.1.1 send-community extended&#xD;
+  neighbor 102.1.1.1 route-map loopback out&#xD;
+ exit-address-family&#xD;
+!&#xD;
+ip forward-protocol nd&#xD;
+!&#xD;
+ip bgp-community new-format&#xD;
+!&#xD;
+no ip http server&#xD;
+no ip http secure-server&#xD;
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr&#xD;
+ip ssh server algorithm authentication password&#xD;
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr&#xD;
+!&#xD;
+!&#xD;
+ip prefix-list loopback seq 5 permit 55.55.55.55/32&#xD;
+ipv6 ioam timestamp&#xD;
+!&#xD;
+route-map loopback permit 10&#xD;
+ match ip address prefix-list loopback&#xD;
+ set extcommunity rt 65001:1&#xD;
+!&#xD;
+route-map loopb permit 10&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+control-plane&#xD;
+!&#xD;
+banner exec `&#xD;
+**************************************************************************&#xD;
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *&#xD;
+* education. IOSv is provided as-is and is not supported by Cisco's      *&#xD;
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *&#xD;
+* of the IOSv Software or Documentation to any third party for any       *&#xD;
+* purposes is expressly prohibited except as otherwise authorized by     *&#xD;
+* Cisco in writing.                                                      *&#xD;
+**************************************************************************`&#xD;
+banner incoming `&#xD;
+**************************************************************************&#xD;
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *&#xD;
+* education. IOSv is provided as-is and is not supported by Cisco's      *&#xD;
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *&#xD;
+* of the IOSv Software or Documentation to any third party for any       *&#xD;
+* purposes is expressly prohibited except as otherwise authorized by     *&#xD;
+* Cisco in writing.                                                      *&#xD;
+**************************************************************************`&#xD;
+banner login `&#xD;
+**************************************************************************&#xD;
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *&#xD;
+* education. IOSv is provided as-is and is not supported by Cisco's      *&#xD;
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *&#xD;
+* of the IOSv Software or Documentation to any third party for any       *&#xD;
+* purposes is expressly prohibited except as otherwise authorized by     *&#xD;
+* Cisco in writing.                                                      *&#xD;
+**************************************************************************`&#xD;
+!&#xD;
+line con 0&#xD;
+ password cisco&#xD;
+line aux 0&#xD;
+line vty 0 4&#xD;
+ exec-timeout 720 0&#xD;
+ password cisco&#xD;
+ login local&#xD;
+ transport input telnet ssh&#xD;
+!&#xD;
+no scheduler allocate&#xD;
+!&#xD;
+end</entry>
         </extensions>
         <interface id="0" name="GigabitEthernet0/1"/>
         <interface id="1" name="GigabitEthernet0/2"/>
@@ -2403,188 +2403,188 @@ end
     <node name="ISP2" type="SIMPLE" subtype="IOSv" location="232,378">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
-            <entry key="config" type="String">!
-! Last configuration change at 20:27:02 UTC Mon Nov 12 2018
-!
-version 15.6
-service timestamps debug datetime msec
-service timestamps log datetime msec
-no service password-encryption
-!
-hostname ISP2
-!
-boot-start-marker
-boot-end-marker
-!
-!
-vrf definition Mgmt-intf
- !
- address-family ipv4
- exit-address-family
- !
- address-family ipv6
- exit-address-family
-!
-enable password cisco
-!
-no aaa new-model
-!
-!
-!
-mmi polling-interval 60
-no mmi auto-configure
-no mmi pvc
-mmi snmp-timeout 180
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-no ip domain lookup
-ip domain name virl.info
-ip cef
-ipv6 unicast-routing
-ipv6 cef
-!
-multilink bundle-name authenticated
-!
-!
-!
-!
-username cisco privilege 15 secret 5 $1$iR10$W3pnLkSI5TaipWpVpdsHX/
-!
-redundancy
-!
-!
-! 
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-interface Loopback0
- description Loopback
- ip address 102.102.102.102 255.255.255.255
-!
-interface GigabitEthernet0/0
- description OOB Management
- vrf forwarding Mgmt-intf
- ip address 172.16.1.67 255.255.255.0
- duplex full
- speed auto
- media-type rj45
-!
-interface GigabitEthernet0/1
- description to R7
- ip address 102.2.2.1 255.255.255.252
- duplex full
- speed auto
- media-type rj45
-!
-interface GigabitEthernet0/2
- description to R16
- ip address 102.1.1.1 255.255.255.252
- duplex full
- speed auto
- media-type rj45
-!
-interface GigabitEthernet0/3
- description GigabitEthernet0/3
- no ip address
- duplex full
- speed auto
- media-type rj45
-!
-router bgp 20002
- bgp router-id 102.102.102.102
- bgp log-neighbor-changes
- network 102.1.1.0 mask 255.255.255.252
- network 102.2.2.0 mask 255.255.255.252
- network 102.102.102.102 mask 255.255.255.255
- neighbor 102.1.1.2 remote-as 34567
- neighbor 102.1.1.2 route-map peer-r16 in
- neighbor 102.2.2.2 remote-as 12345
- neighbor 102.2.2.2 route-map peer-r7 in
-!
-ip forward-protocol nd
-!
-ip bgp-community new-format
-ip community-list 7 permit 65001:1
-ip community-list 16 permit 65001:1
-!
-no ip http server
-no ip http secure-server
-ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
-ip ssh server algorithm authentication password
-ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
-!
-ipv6 ioam timestamp
-!
-route-map peer-r16 permit 10
- match community 16
- set local-preference 120
-!
-route-map peer-r7 permit 10
- match community 7
- set local-preference 110
-!
-!
-!
-control-plane
-!
-banner exec `
-**************************************************************************
-* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
-* education. IOSv is provided as-is and is not supported by Cisco's      *
-* Technical Advisory Center. Any use or disclosure, in whole or in part, *
-* of the IOSv Software or Documentation to any third party for any       *
-* purposes is expressly prohibited except as otherwise authorized by     *
-* Cisco in writing.                                                      *
-**************************************************************************`
-banner incoming `
-**************************************************************************
-* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
-* education. IOSv is provided as-is and is not supported by Cisco's      *
-* Technical Advisory Center. Any use or disclosure, in whole or in part, *
-* of the IOSv Software or Documentation to any third party for any       *
-* purposes is expressly prohibited except as otherwise authorized by     *
-* Cisco in writing.                                                      *
-**************************************************************************`
-banner login `
-**************************************************************************
-* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
-* education. IOSv is provided as-is and is not supported by Cisco's      *
-* Technical Advisory Center. Any use or disclosure, in whole or in part, *
-* of the IOSv Software or Documentation to any third party for any       *
-* purposes is expressly prohibited except as otherwise authorized by     *
-* Cisco in writing.                                                      *
-**************************************************************************`
-!
-line con 0
- password cisco
-line aux 0
-line vty 0 4
- exec-timeout 720 0
- password cisco
- login local
- transport input telnet ssh
-!
-no scheduler allocate
-!
-end
-
+            <entry key="config" type="String">!&#xD;
+! Last configuration change at 00:49:55 UTC Thu Nov 15 2018&#xD;
+!&#xD;
+version 15.6&#xD;
+service timestamps debug datetime msec&#xD;
+service timestamps log datetime msec&#xD;
+no service password-encryption&#xD;
+!&#xD;
+hostname ISP2&#xD;
+!&#xD;
+boot-start-marker&#xD;
+boot-end-marker&#xD;
+!&#xD;
+!&#xD;
+vrf definition Mgmt-intf&#xD;
+ !&#xD;
+ address-family ipv4&#xD;
+ exit-address-family&#xD;
+ !&#xD;
+ address-family ipv6&#xD;
+ exit-address-family&#xD;
+!&#xD;
+enable password cisco&#xD;
+!&#xD;
+no aaa new-model&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+mmi polling-interval 60&#xD;
+no mmi auto-configure&#xD;
+no mmi pvc&#xD;
+mmi snmp-timeout 180&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+no ip domain lookup&#xD;
+ip domain name virl.info&#xD;
+ip cef&#xD;
+ipv6 unicast-routing&#xD;
+ipv6 cef&#xD;
+!&#xD;
+multilink bundle-name authenticated&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+username cisco privilege 15 secret 5 $1$iR10$W3pnLkSI5TaipWpVpdsHX/&#xD;
+!&#xD;
+redundancy&#xD;
+!&#xD;
+!&#xD;
+! &#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+interface Loopback0&#xD;
+ description Loopback&#xD;
+ ip address 102.102.102.102 255.255.255.255&#xD;
+!&#xD;
+interface GigabitEthernet0/0&#xD;
+ description OOB Management&#xD;
+ vrf forwarding Mgmt-intf&#xD;
+ ip address 10.255.1.15 255.255.0.0&#xD;
+ duplex full&#xD;
+ speed auto&#xD;
+ media-type rj45&#xD;
+!&#xD;
+interface GigabitEthernet0/1&#xD;
+ description to R7&#xD;
+ ip address 102.2.2.1 255.255.255.252&#xD;
+ duplex full&#xD;
+ speed auto&#xD;
+ media-type rj45&#xD;
+!&#xD;
+interface GigabitEthernet0/2&#xD;
+ description to R16&#xD;
+ ip address 102.1.1.1 255.255.255.252&#xD;
+ duplex full&#xD;
+ speed auto&#xD;
+ media-type rj45&#xD;
+!&#xD;
+interface GigabitEthernet0/3&#xD;
+ description GigabitEthernet0/3&#xD;
+ no ip address&#xD;
+ duplex full&#xD;
+ speed auto&#xD;
+ media-type rj45&#xD;
+!&#xD;
+router bgp 20002&#xD;
+ bgp router-id 102.102.102.102&#xD;
+ bgp log-neighbor-changes&#xD;
+ network 102.1.1.0 mask 255.255.255.252&#xD;
+ network 102.2.2.0 mask 255.255.255.252&#xD;
+ network 102.102.102.102 mask 255.255.255.255&#xD;
+ neighbor 102.1.1.2 remote-as 34567&#xD;
+ neighbor 102.1.1.2 route-map peer-r16 in&#xD;
+ neighbor 102.2.2.2 remote-as 12345&#xD;
+ neighbor 102.2.2.2 route-map peer-r7 in&#xD;
+!&#xD;
+ip forward-protocol nd&#xD;
+!&#xD;
+ip extcommunity-list 7 permit rt 65001:1&#xD;
+ip extcommunity-list 16 permit rt 65001:1&#xD;
+ip bgp-community new-format&#xD;
+!&#xD;
+no ip http server&#xD;
+no ip http secure-server&#xD;
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr&#xD;
+ip ssh server algorithm authentication password&#xD;
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr&#xD;
+!&#xD;
+ipv6 ioam timestamp&#xD;
+!&#xD;
+route-map peer-r16 permit 10&#xD;
+ match extcommunity 16&#xD;
+ set weight 120&#xD;
+!&#xD;
+route-map peer-r7 permit 10&#xD;
+ match extcommunity 7&#xD;
+ set weight 110&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+control-plane&#xD;
+!&#xD;
+banner exec `&#xD;
+**************************************************************************&#xD;
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *&#xD;
+* education. IOSv is provided as-is and is not supported by Cisco's      *&#xD;
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *&#xD;
+* of the IOSv Software or Documentation to any third party for any       *&#xD;
+* purposes is expressly prohibited except as otherwise authorized by     *&#xD;
+* Cisco in writing.                                                      *&#xD;
+**************************************************************************`&#xD;
+banner incoming `&#xD;
+**************************************************************************&#xD;
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *&#xD;
+* education. IOSv is provided as-is and is not supported by Cisco's      *&#xD;
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *&#xD;
+* of the IOSv Software or Documentation to any third party for any       *&#xD;
+* purposes is expressly prohibited except as otherwise authorized by     *&#xD;
+* Cisco in writing.                                                      *&#xD;
+**************************************************************************`&#xD;
+banner login `&#xD;
+**************************************************************************&#xD;
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *&#xD;
+* education. IOSv is provided as-is and is not supported by Cisco's      *&#xD;
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *&#xD;
+* of the IOSv Software or Documentation to any third party for any       *&#xD;
+* purposes is expressly prohibited except as otherwise authorized by     *&#xD;
+* Cisco in writing.                                                      *&#xD;
+**************************************************************************`&#xD;
+!&#xD;
+line con 0&#xD;
+ password cisco&#xD;
+line aux 0&#xD;
+line vty 0 4&#xD;
+ exec-timeout 720 0&#xD;
+ password cisco&#xD;
+ login local&#xD;
+ transport input telnet ssh&#xD;
+!&#xD;
+no scheduler allocate&#xD;
+!&#xD;
+end&#xD;
+&#xD;
 </entry>
         </extensions>
         <interface id="0" name="GigabitEthernet0/1"/>
